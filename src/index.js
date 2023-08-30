@@ -4,12 +4,12 @@ import { refs } from "./refs";
 import { fetchList } from "./api";
 const {searchForm, searchBtn, searchQuery} = refs
 
-axios.defaults.headers.common["x-api-key"] = "39130911-8039e4f23f6b3aae8a4a0d71c";
+//axios.defaults.headers.common["x-api-key"] = "39130911-8039e4f23f6b3aae8a4a0d71c";
 
 searchBtn.addEventListener("submit", onSearchList
 )
 const textQuery = searchQuery.value;
-console.log(textQuery);
+console.dir(textQuery);
 
 function  onSearchList(evt) {
     evt.preventDefault();
