@@ -14,7 +14,7 @@ export async function fetchList(querySearch,page) {
         orientation: "horizontal",
         safesearch: "true",
         page: `${page}`,
-        per_page: `${perPage}`,
+        per_page: `40`,
       });
 
     try {
