@@ -7,14 +7,14 @@ import axios from "axios";
     API_KEY = "39130911-8039e4f23f6b3aae8a4a0d71c";
 
 
-export async function fetchList(querySearch,currentPage) {
+export async function fetchList(querySearch,page) {
     const params = new URLSearchParams({
         q: `${querySearch}`,
         image_type: "photo",
         orientation: "horizontal",
         safesearch: "true",
-        page: `${currentPage}`,
-        per_page: "40",
+        page: `${page}`,
+        per_page: `${perPage}`,
       });
 
     try {

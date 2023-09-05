@@ -13,7 +13,7 @@ const {searchForm, gallerySelector, searchBtn, searchQuery, loadBtn} = refs
 searchForm.addEventListener("submit", onFirstList)
 let querySearch = "";
 const perPage = 40;
-const currentPage = 1;
+const page = 1;
 const totalPages = 1;
 const lightbox = new SimpleLightbox('.gallery a', { captionDelay: 250 });
 
@@ -23,14 +23,14 @@ async function  onFirstList(evt) {
     evt.preventDefault();
     gallerySelector.innerHTML = "";
     querySearch = evt.currentTarget.searchQuery.value;
-  
+    page = 1;
     const result = await fetchList(querySearch);
 
     const {total, totalHits, hits} = result;
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images!`);
     totalPages = Math.ceil(totalHits / perPage);
     gallerySelector.innerHTML = createMarkUp(hits);
-    
+    lightbox.refresh()
     let lightbox = new SimpleLightbox('.gallery a', { captionDelay: 250, captionsData: "alt" });
     querySearch.reset()
 
@@ -41,7 +41,7 @@ loadBtn.addEventListener("click", onMorePhoto)
 async function  onMorePhoto(evt) {
     evt.preventDefault();
     gallerySelector.innerHTML = "";
-    currentPage +=1;
+    page += 1;
     console.log(totalPages);
     if(currentPage > totalPages) {
         loadBtn.classList.replace("visible","not-visible");
