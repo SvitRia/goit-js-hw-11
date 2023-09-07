@@ -34,12 +34,13 @@ async function  onSearchFormSubmit(evt) {
         return;
     }
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images!`);
-    if(totalHits < perPage) {
-        return;
-    }
+   
     totalPages = Math.ceil(totalHits / perPage);
     gallerySelector.innerHTML = createMarkUp(hits);
     lightbox.refresh();
+    if(totalHits < perPage) {
+        return;
+    }
     loadBtn.classList.remove("not-visible");
 }
 
