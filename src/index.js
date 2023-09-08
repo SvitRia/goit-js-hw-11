@@ -29,11 +29,11 @@ const lightbox = new SimpleLightbox('.gallery a', { captionDelay: 250, captionsD
       
 async function  onSearchFormSubmit(evt) {
     evt.preventDefault();
+    loadBtn.classList.add("not-visible");
     gallerySelector.innerHTML = "";
     page = 1;
     querySearch = evt.currentTarget.searchQuery.value;
-    if(!querySearch.trim()) {
-        loadBtn.classList.add("not-visible");
+    if(!querySearch.trim()) 
         return
     }
     const result = await fetchList(querySearch, page);
