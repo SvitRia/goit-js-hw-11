@@ -1,10 +1,10 @@
-//import axios from "axios";
+//mport axios from "axios";
 import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { refs } from "./refs";
-import { fetchList, createMarkUp } from "./api";
-
+import { fetchList, fetchStartList } from "./api";
+import { createMarkUp, createStartMarkUp } from './markup';
 const {searchForm, gallerySelector, searchBtn, searchQuery, loadBtn} = refs
 
 let page = 1;
@@ -12,11 +12,21 @@ let querySearch = "";
 let totalPages = 1;
 const perPage = 40;
 
+async function onStartForm() { 
 
+loadBtn.classList.add("not-visible");
+const resultAll = await fetchStartList()
+const { hits} = resultAll;
+gallerySelector.innerHTML = createStartMarkUp(hits);
+lightbox.refresh();
+}
 
+onStartForm()
+ 
 loadBtn.classList.add("not-visible");
 searchForm.addEventListener("submit", onSearchFormSubmit)
 const lightbox = new SimpleLightbox('.gallery a', { captionDelay: 250, captionsData: "alt", overlayOpacity: 0.5 });
+      
 async function  onSearchFormSubmit(evt) {
     evt.preventDefault();
     gallerySelector.innerHTML = "";
@@ -30,6 +40,7 @@ async function  onSearchFormSubmit(evt) {
     const { totalHits, hits} = result;
     searchQuery.value = "";
     if(totalHits === 0) {
+        loadBtn.classList.add("not-visible");
         Notiflix.Notify.warning(`Sorry, there are no images matching your search query. Please try again.`)
         return;
     }
@@ -39,6 +50,7 @@ async function  onSearchFormSubmit(evt) {
     gallerySelector.innerHTML = createMarkUp(hits);
     lightbox.refresh();
     if(totalHits < perPage) {
+        loadBtn.classList.add("not-visible");
         return;
     }
     loadBtn.classList.remove("not-visible");
@@ -58,7 +70,6 @@ async function  onMorePhoto(evt) {
     const result = await fetchList(querySearch, page);
    
     const { hits} = result;
-    console.log(hits);
     
     gallerySelector.insertAdjacentHTML ("beforeend",createMarkUp(hits));
     lightbox.refresh();
